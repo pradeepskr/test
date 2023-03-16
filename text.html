@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript HTML DOM</h2>
+
+<p id="intro">Finding HTML Elements by Id</p>
+<p>This example demonstrates the <b>getElementsById</b> method.</p>
+
+<p id="demo">share</p>
+
+<script>
+const element = document.getElementById("intro");
+let file;
+async function createFile(){
+  console.log('start')
+  let response = await fetch('https://cdn.autocameo.com/T01/M01/video/b7/b7c52c4ab04ae8eff761a9b0eb180755.mp4');
+  let data = await response.blob();
+  let metadata = {
+    type: 'image/jpeg'
+  };
+  file = new File([data], "test.jpg", metadata);
+  console.log('end')
+}
+createFile();
+
+document.getElementById("demo").addEventListener('click',()=>{
+    navigator.share({
+        files,
+        text: 'Hello World',
+        url: "window.location.href"
+    })
+    .then(() => console.log('Successful share! 🎉'))
+    .catch(err => console.error(err));
+
+})
+
+</script>
+
+</body>
+</html>
