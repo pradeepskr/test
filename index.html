@@ -5,7 +5,7 @@
 <h2>JavaScript HTML DOM</h2>
 <input id="file" type="file">
 
-<p id="demo">share</p>
+<p id="demo">share now</p>
 
 <script>
 const element = document.getElementById("intro");
@@ -22,12 +22,12 @@ const element = document.getElementById("intro");
 // createFile();
 
 document.getElementById("demo").addEventListener('click',()=>{
-    let file=document.getElementById('file').files[0]
+    const file=document.getElementById('file').files
     console.log(file)
-    navigator.share({
+    await navigator.share({
         file,
-        text: 'Hello World',
-        url: "window.location.href"
+        title: "Images",
+        text: "Beautiful images",
     })
     .then(() => console.log('Successful share! 🎉'))
     .catch(err => console.error(err));
