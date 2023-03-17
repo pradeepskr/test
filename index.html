@@ -3,35 +3,63 @@
 <body>
 
 <h2>JavaScript HTML DOM</h2>
-<input id="file" type="file">
+<video src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"></video>
 
 <button id="demo">share now</button>
 
 <script>
-const element = document.getElementById("intro");
-// async function createFile(){
-//   console.log('start')
-//   let response = await fetch('https://cdn.autocameo.com/T01/M01/video/b7/b7c52c4ab04ae8eff761a9b0eb180755.mp4');
-//   let data = await response.blob();
-//   let metadata = {
-//     type: 'image/jpeg'
-//   };
-//   file = new File([data], "test.jpg", metadata);
-//   console.log('end')
-// }
-// createFile();
+const button = document.querySelector('button');
+const img =  document.querySelector('video');
 
-document.getElementById("demo").addEventListener('click',()=>{
-    const file=document.getElementById('file').files
-    console.log(file)
-    navigator.share({
-        file,
-        title: "Images",
-        text: "Beautiful images",
-    })
-    .then(() => console.log('Successful share! 🎉'))
-    .catch(err => console.error(err));
-})
+// Feature detection
+const webShareSupported = 'canShare' in navigator;
+// Update the button action text.
+button.textContent = webShareSupported ? 'Share' : 'Download';
+
+const shareOrDownload = async (blob, fileName, title, text) => {
+  // Using the Web Share API.
+  if (webShareSupported) {
+    const data = {
+      files: [
+        new File([blob], fileName, {
+          type: blob.type,
+        }),
+      ],
+      title,
+      text,
+    };
+    if (navigator.canShare(data)) {
+      try {
+        await navigator.share(data);
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error(err.name, err.message);
+        }
+      } finally {
+        return;
+      }
+    }
+  }
+  // Fallback implementation.
+  const a = document.createElement('a');
+  a.download = fileName;
+  a.style.display = 'none';
+  a.href = URL.createObjectURL(blob);
+  a.addEventListener('click', () => {
+    setTimeout(() => {
+      URL.revokeObjectURL(a.href);
+      a.remove();
+    }, 1000)
+  });
+  document.body.append(a);
+  a.click();
+};
+
+button.addEventListener('click', async () => {
+  const blob = await fetch(img.src).then(res => res.blob());
+  await shareOrDownload(blob, 'cat.mp4', 'Cat in the snow', 'Getting cold feet…');
+});
+
 
 </script>
 
