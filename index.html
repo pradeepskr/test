@@ -9,7 +9,6 @@
 
 <script>
 const element = document.getElementById("intro");
-let file;
 // async function createFile(){
 //   console.log('start')
 //   let response = await fetch('https://cdn.autocameo.com/T01/M01/video/b7/b7c52c4ab04ae8eff761a9b0eb180755.mp4');
@@ -23,7 +22,8 @@ let file;
 // createFile();
 
 document.getElementById("demo").addEventListener('click',()=>{
-    const file=document.getElementById('file').files[0]
+    let file=document.getElementById('file').files[0]
+    console.log(file)
     navigator.share({
         file,
         text: 'Hello World',
