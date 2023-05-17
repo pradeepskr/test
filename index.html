@@ -50,7 +50,6 @@ const shareOrDownload = async (blob, fileName, title, text) => {
 };
 
 button.addEventListener('click', async () => {
-  const blob = await fetch(img.src).then(res => res.blob());
   await shareOrDownload(blob, 'test.png', 'Emoji Test', '*emoji* 👆🏽');
 });
 
