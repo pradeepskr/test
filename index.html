@@ -20,11 +20,6 @@ const shareOrDownload = async (blob, fileName, title, text) => {
   // Using the Web Share API.
   if (webShareSupported) {
     const data = {
-      files: [
-        new File([blob], fileName, {
-          type: blob.type,
-        }),
-      ],
       title,
       text,
     };
@@ -57,7 +52,7 @@ const shareOrDownload = async (blob, fileName, title, text) => {
 
 button.addEventListener('click', async () => {
   const blob = await fetch(img.src).then(res => res.blob());
-  await shareOrDownload(blob, 'cat.mp4', 'Cat in the snow', 'Getting cold feet…');
+  await shareOrDownload(blob, 'test.png', 'Emoji Test', 'emoji 👆🏽');
 });
 
 
