@@ -2,7 +2,7 @@
 <html>
 <body>
 
-<h2>JavaScript HTML DOMS</h2>
+<h2>JavaScript HTML DOM</h2>
 
 <button id="demo" style="width: 50%">share now</button>
 
@@ -15,7 +15,7 @@ const webShareSupported = 'canShare' in navigator;
 // Update the button action text.
 button.textContent = webShareSupported ? 'Share' : 'Download';
 
-const shareOrDownload = async (blob, fileName, title, text) => {
+const shareOrDownload = async ( fileName, title, text) => {
   // Using the Web Share API.
   if (webShareSupported) {
     const data = {
@@ -50,7 +50,7 @@ const shareOrDownload = async (blob, fileName, title, text) => {
 };
 
 button.addEventListener('click', async () => {
-  await shareOrDownload(blob, 'test.png', 'Emoji Test', '*emoji* 👆🏽');
+  await shareOrDownload('test.png', 'Emoji Test', '*emoji* 👆🏽');
 });
 
 
